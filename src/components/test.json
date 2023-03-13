@@ -1,0 +1,19 @@
+{
+  "data": {
+    "Media": {
+      "id": 30013,
+      "type": "MANGA",
+      "characters": { "pageInfo": { "total": 500 } },
+      "volumes": null,
+      "coverImage": {
+        "medium": "https://s4.anilist.co/file/anilistcdn/media/manga/cover/small/bx30013-oT7YguhEK1TE.jpg"
+      },
+      "format": "MANGA",
+      "title": {
+        "romaji": "ONE PIECE",
+        "english": "One Piece",
+        "native": "ONE PIECE"
+      }
+    }
+  }
+}

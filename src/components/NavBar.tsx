@@ -11,7 +11,7 @@ export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar color="black">
           <IconButton
             size="large"
             edge="start"
@@ -22,7 +22,7 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            MangaProject
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

@@ -35,7 +35,7 @@ export const searchTitles = (query) => {
     .catch(() => []);
 };
 
-export const mangaDetails = (id) => {
+export const mangaDetail = (id) => {
   const requestQuery = JSON.stringify({
     query: `query ($id: Int) {
       Page {

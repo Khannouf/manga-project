@@ -11,6 +11,10 @@ const Global = () => {
       box-sizing: border-box !important;
       font-family: Roboto, sans-serif;
     }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   `} />
 }
 

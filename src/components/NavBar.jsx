@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 
-export default function ButtonAppBar() {
+export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -23,9 +23,11 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            MangaProject
+            <Link to="/">
+                MangaProject
+            </Link>
           </Typography>
-          <Link to={`/connexion`}>
+          <Link to="/connexion">
             <Button color="inherit">Login</Button>
           </Link>
         </Toolbar>

@@ -9,6 +9,8 @@ const Search = () => {
   const [titles, setTitles] = useState([]);
 
   useEffect(() => {
+    if (!query) return setTitles([])
+
     setLoading(true)
     searchTitles(query).then(titles => {
       setLoading(false)

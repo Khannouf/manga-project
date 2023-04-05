@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar.jsx";
+import Navbar from "./components/NavBar.jsx";
 import Providers from "./providers/index.jsx";
 import Router from "./routes/index.jsx";
 import Global from "./styles/Global.jsx";

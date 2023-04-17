@@ -112,7 +112,7 @@ const MangaCard = (props) => {
       </Link>
 
       <CardActions>
-        <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+        <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} color="secondary"/>
       </CardActions>
     </Card>
   );

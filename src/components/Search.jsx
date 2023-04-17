@@ -1,27 +1,43 @@
-import { Container, CircularProgress, Box, TextField } from "@mui/material";
+import {
+  Container,
+  CircularProgress,
+  Box,
+  TextField,
+  Grid,
+} from "@mui/material";
 import MangaCard from "./Card.jsx";
 import { useEffect, useState } from "react";
 import { searchTitles } from "../utils/requests/title.request.js";
+import { SearchInput } from "./Input.jsx";
+import { height } from "@mui/system";
 
 const Search = () => {
-  const [loading, setLoading] = useState(false)
-  const [query, setQuery] = useState("")
+  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState("");
   const [titles, setTitles] = useState([]);
 
   useEffect(() => {
-    if (!query) return setTitles([])
+    if (!query) return setTitles([]);
 
-    setLoading(true)
-    searchTitles(query).then(titles => {
-      setLoading(false)
-      setTitles(titles)
-    })
-  }, [query])
+    setLoading(true);
+    searchTitles(query).then((titles) => {
+      setLoading(false);
+      setTitles(titles);
+    });
+  }, [query]);
 
   return (
-    <Box>
-      <TextField value={query} onChange={e => setQuery(e.target.value)} />
-      <Container
+    <Box sx={{
+      display:"flex",
+      flexDirection: "column",
+      alignItems:"center",
+      justifyContent:"center",
+      minHeight: "100vh",
+      marginTop: 3,
+    }}>
+          
+        <SearchInput value={query} onChange={e => setQuery(e.target.value)} />
+        <Container
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
@@ -33,12 +49,14 @@ const Search = () => {
           },
         }}
       >
-        {loading ? <CircularProgress /> : titles.map(title => (
-          <MangaCard key={title.id} title={title} />
-        ))}
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          titles.map((title) => <MangaCard key={title.id} title={title} />)
+        )}
       </Container>
     </Box>
   );
-}
+};
 
 export default Search;

@@ -41,6 +41,7 @@ export const mangaDetail = (id) => {
       Page {
         media(type: MANGA, id: $id, isAdult: false, sort: TRENDING_DESC) {
           id 
+          description
           title {
             romaji
             english

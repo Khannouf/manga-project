@@ -27,15 +27,7 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar color="black">
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, color: "#66d37e" }}
-          >
-            <MenuIcon />
-          </IconButton>
+          
           <Typography
             variant="h6"
             component="div"

@@ -8,15 +8,56 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import img from "../img/facebook_cover_photo_2.png"
+import { useNavigate } from "react-router-dom";
 
 const Connexion = () => {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate()
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get("email"),
+      username: data.get("email"),
       password: data.get("password"),
+
     });
+    const fetchData  = await fetch("http://localhost:8888/auth/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: data.get("email"),
+        password: data.get("password")
+      })
+    })
+    // .then(response => {
+    //   console.log(response.body);
+    // })
+    .then(res => res.json())
+    .catch(error => {
+      console.log("une erreur s'est produite");
+    });
+    if (fetchData.type == "success"){
+      console.log(fetchData.data);
+      localStorage.setItem("token", fetchData.data)
+      fetch("http://localhost:8888/auth/me", {
+        method: 'GET', // Remplacez GET par la méthode appropriée (GET, POST, PUT, etc.)
+        headers: {
+          'Authorization': `Bearer ${fetchData.data}`
+        }
+      })
+      .then(response => {
+        console.log("reussi");
+        navigate('/')
+        window.location.relaod()
+      })
+      .catch(error => {
+        console.log("erreu : " + error);
+      });
+    }else{
+      console.log("pas de token");
+    }
+
   };
 
   return (
@@ -101,7 +142,7 @@ const Connexion = () => {
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <Link href="/inscription" variant="body2">
+                    <Link href="/inscription" variant="body2" color="secondary">
                       Pas de compte ? Inscrivez-vous !
                     </Link>
                   </Grid>

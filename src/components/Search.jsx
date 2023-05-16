@@ -37,20 +37,37 @@ const Search = () => {
     }}>
           
         <SearchInput value={query} onChange={e => setQuery(e.target.value)} />
+        {loading && (
+          <Box sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}>
+            <CircularProgress color="secondary" sx={{
+              mt : 2,
+              width: "150px !important",
+              height: "150px !important"
+            }}/>
+          </Box>
+        )}
         <Container
         sx={{
+          // display: "grid",
+          // gridTemplateColumns: "repeat(4, 1fr)",
+          // columnGap: "16px",
+          // rowGap: "16px",
+          // mt: 2,
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          columnGap: "16px",
-          rowGap: "16px",
-          mt: 2,
+        columnGap: 2,
+        rowGap: 2,
+        mt: 4,
+        gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
           "& > div": {
             maxWidth: "initial",
           },
         }}
       >
         {loading ? (
-          <CircularProgress />
+          <></>
         ) : (
           titles.map((title) => <MangaCard key={title.id} title={title} />)
         )}

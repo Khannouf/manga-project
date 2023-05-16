@@ -19,6 +19,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { mangaDetail } from "../utils/requests/title.request";
 import img from "../img/linkedin_banner_image_1.png";
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import DropdownButton from "../components/MenuAddList";
+
+
+
+
+const token = localStorage.getItem("token")
+
 
 const MangaDetail = () => {
   const theme = useTheme();
@@ -27,9 +37,34 @@ const MangaDetail = () => {
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState(null);
   const [characters, setCharacters] = useState({});
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [list, setLists] = useState([])
+  const [contentLists, setContentLists] = useState([])
+
+
+  const handleFetch = async () => {
+    const data = await fetch("http://localhost:8888/lists/details", {
+      method: 'GET', 
+      headers: { 'Authorization': `Bearer ${token}`}
+    })
+      .then(res => res.json())
+      .catch(() => null);
+    if (!data || data.type !== "success") return console.log("Une erreur s'est produite.", data)
+    data?.data.map(async (listData) => {
+      //console.log(listData.id);
+      const contentListData = await fetch(`http://localhost:8888/lists/${listData.id}`,{
+        method: 'GET',
+        headers: {'Authorization' : `Bearer ${token}`}
+      })
+    })
+    //const listData = await fetch(`http://localhost:8888/lists/${data.data.id}`)
+    setLists(data.data)
+    //console.log(data.data);
+  }
 
   useEffect(() => {
     setLoading(true);
+    handleFetch()
     mangaDetail(id).then((response) => {
       setLoading(false);
       if (!response || response.length === 0) return;
@@ -37,6 +72,17 @@ const MangaDetail = () => {
       setCharacters(response[0].characters);
     });
   }, [id]);
+
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
   //console.log(JSON.stringify(detail.characters));
   // characters.map((character, index) => (
   //   console.log(character.node.name)
@@ -126,6 +172,32 @@ const MangaDetail = () => {
               <Typography variant="h3" fontWeight={550}>
                 {detail.title.english ?? detail.title.romaji}
               </Typography>
+              {/* Rajout du boutton add to list */}
+              {/* <div>
+                <Button
+                  variant="contained"
+                  onClick={handleClick}
+                >
+                  Ajouter à la liste
+                </Button>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                >
+                  {
+
+                  }
+                  {list?.map((lists) =>(
+                    <MenuItem onClick={handleClose} key={lists.id}>{lists.name}</MenuItem>
+                  ))}
+                </Menu>
+              </div> */}
+              <DropdownButton />
             </Box>
             {/* BOX avec title et description */}
             <Box
@@ -136,6 +208,7 @@ const MangaDetail = () => {
             >
               {detail.genres.map((genre, index) => (
                 <Chip
+                  key={genre}
                   label={genre}
                   sx={{
                     marginRight: index === detail.genres.length - 1 ? 0 : 1,

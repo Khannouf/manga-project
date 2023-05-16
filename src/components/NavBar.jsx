@@ -9,10 +9,20 @@ import MenuIcon from "@mui/icons-material/Menu";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import LoginIcon from "@mui/icons-material/Login";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { Link } from "react-router-dom";
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import RecommendIcon from '@mui/icons-material/Recommend';
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  let i = 1;
+  const navigate = useNavigate()
+  const deconnexion = () =>{
+    localStorage.removeItem("token")
+    navigate('/')
+    window.location.reload()
+  }
+  
+  let i = localStorage.getItem("token");
+  console.log(i);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -34,31 +44,38 @@ export default function Navbar() {
           >
             <Link to="/">MangaProject</Link>
           </Typography>
-          {i === 0 ? (
-            <Link to="/deconnexion">
-              <Button color="inherit" sx={{ color: "#66d37e" }}>
+          {localStorage.getItem("token") ? (
+            <>
+            <Link to="/recommendations">
+            <Button color="inherit" sx={{ color: "#66d37e" }} title="Recommendations">
+              <RecommendIcon />
+            </Button>
+            </Link>
+            <Link>
+              <Button color="inherit" sx={{ color: "#66d37e" }} title="Décoonnexion" onClick={deconnexion}>
                 <ExitToAppIcon />
               </Button>
             </Link>
+            <Link to="/listes">
+            <Button color="inherit" sx={{ color: "#66d37e" }} title="Mes listes">
+              <BookmarksIcon />
+            </Button>
+            </Link>
+          </>
           ) : (
             <>
               <Link to="/connexion">
-                <Button color="inherit" sx={{ color: "#66d37e" }}>
+                <Button color="inherit" sx={{ color: "#66d37e" }}  title="Connexion">
                   <LoginIcon />
                 </Button>
               </Link>
               <Link to="/inscription">
-                <Button color="inherit" sx={{ color: "#66d37e" }}>
-                  Inscription
+                <Button color="inherit" sx={{ color: "#66d37e" }} title="Inscription">
+                  <AppRegistrationIcon />
                 </Button>
               </Link>
             </>
           )}
-          <Link to="/listes">
-            <Button color="inherit" sx={{ color: "#66d37e" }}>
-              <BookmarksIcon />
-            </Button>
-          </Link>
         </Toolbar>
       </AppBar>
     </Box>

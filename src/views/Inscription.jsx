@@ -8,15 +8,40 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import img from "../img/facebook_cover_photo_2.png"
+//import { useHistory } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Inscription = () => {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate()
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+    const fetchData  = await fetch("http://localhost:8888/auth/register", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: data.get("email"),
+        password: data.get("password")
+      })
+    })
+    // .then(response => {
+    //   console.log(response.body);
+    // })
+    .then(res => res.json())
+    .catch(error => {
+      console.log("une erreur s'est produite");
+    });
+    if (fetchData.type == "success"){
+      localStorage.setItem("token", fetchData.data)
+      navigate('/')
+      window.location.reload()
+    }
   };
 
   return (
